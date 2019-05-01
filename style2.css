@@ -1,0 +1,30 @@
+@media (max-width: 650px) {
+	#sale {
+		min-height: auto;
+	}
+	#column1 {
+		padding: 10px 10px;
+	}
+	#product-detail-view {
+		grid-template-columns: 1fr;
+		min-height: auto;
+		height: 25vh;
+	}
+	#product-detail-main-box {
+		padding: 0;
+
+	}
+	#products-container {
+		grid-template-columns: 1fr 1fr;
+	}
+	#product-detail-extra-boxes-container {
+		display: none;
+	}
+	#product-detail-desc {
+		margin: 0;
+	}
+	#product-detail-main-photo {
+		/*max-height: 100%;*/
+		max-width: 300px;
+	}
+}
