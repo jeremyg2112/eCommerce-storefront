@@ -1,4 +1,4 @@
-@media (max-width: 650px) {
+@media (max-width: 780px) {
 	#sale {
 		min-height: auto;
 	}
@@ -26,5 +26,14 @@
 	#product-detail-main-photo {
 		/*max-height: 100%;*/
 		max-width: 300px;
+	}
+	.cart-thumb-img {
+		width: 80px;
+		max-height: auto;
+		max-width: auto;
+	}
+	#add-cart-btn {
+		margin: 12px;
+		width: 30%;
 	}
 }
