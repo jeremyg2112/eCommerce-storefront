@@ -316,7 +316,7 @@ button:hover {
 	align-items: center;
 }
 
-#product-detail-extra-boxes-container {
+#product-detail-add-photos-container {
 	margin-left: 0;
 	display: grid;
 	grid-template-rows: 1fr 1fr 1fr;
@@ -324,7 +324,7 @@ button:hover {
 	padding: 0;
 }
 
-.product-detail-extra-box {
+.product-detail-add-photo {
 	flex: 33%; 
 	background: lightblue;
 	margin: 0px;
@@ -423,4 +423,16 @@ button:hover {
 	background: gray;
 }
 
+#price-container {
+	margin: 0;
+	padding: 0;
+}
 
+#price-container p {
+	display: inline;
+}
+
+.strike {
+	color: red;
+	text-decoration: line-through;
+}

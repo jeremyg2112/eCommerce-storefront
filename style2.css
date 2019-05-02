@@ -17,7 +17,7 @@
 	#products-container {
 		grid-template-columns: 1fr 1fr;
 	}
-	#product-detail-extra-boxes-container {
+	#product-detail-add-photos-container {
 		display: none;
 	}
 	#product-detail-desc {
