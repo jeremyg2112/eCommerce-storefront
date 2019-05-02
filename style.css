@@ -104,6 +104,7 @@ button:hover {
 #cart-contents {
 	flex-basis: 70%;
 	padding: 0;
+	margin: 0;
 	margin-bottom: 0;
 	overflow-y: auto;
 	display: none;
@@ -335,8 +336,10 @@ button:hover {
 }
 
 #product-detail-main-photo {
-	max-height: 100%;
 	max-width: 100%;
+	max-height: 100%;
+	height: auto;
+	width: auto;
 }
 
 #product-detail-title, #product-price {

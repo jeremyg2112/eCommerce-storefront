@@ -100,6 +100,8 @@ function calculateTotal() {
 	myCart.forEach(function(obj) {
 		return total += obj.price * obj.quantity;
 	})
+	total = total.toLocaleString(Number(total.toFixed(2)));
+	// value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 	cartTotal.innerHTML = "$" + total;
 }			
 
