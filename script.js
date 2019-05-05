@@ -18,35 +18,12 @@ let myCart = [];
 
 // FUNCTIONS
 
-// will accept array of objects from JSON and create html elements for each
+// will accept array of objects from JSON and create a product box for each product
 function createHTML(arr) {
  	for (let i = 0; i < arr.length; i++) {
 
  	// assigns id to HTML elements which corresponds to JSON "productId" property
  		boxes[i].id = arr[i].productId;
-
- 	// will listen for products in gallery being clicked 
- 		boxes[i].addEventListener("click", function(e) {
-
- 		// finds data corresponding to clicked product and prepares HTML for product details	
- 			data.forEach(function(obj) {		
- 				if (obj.productId == boxes[i].id) {
- 					let priceHTML = createPriceHTML(findPrice(obj));
-  					document.getElementById("product-detail-title").innerText = obj.productName;
- 				    document.getElementById("detail-price-container").innerHTML = priceHTML;
- 					document.getElementById("product-description").innerText = obj.desc;
- 					document.getElementById("product-detail-main-photo").src = obj.productImgSrc;
- 					
- 					dataId.value = obj.productId;
- 					addToCartButton.setAttributeNode(dataId);
- 				}
- 			})
-
- 		// clears product gallery elements, changes page to "product detail" view
- 			galleryMode.style = "display: none;";
- 			productDetailMode.style = "display: block;";
- 		})
-
 
  	// checks to see if product is on sale. if so, creates discount bubble on thumbnail 
 		if (arr[i].sale) {
@@ -59,6 +36,30 @@ function createHTML(arr) {
 			`<img class="product-img" src="${arr[i].productImgSrc}">
 				<p class="item-title">${arr[i].productName}</p>`
 		}
+
+ 	// finds data corresponding to clicked product and prepares HTML for product details	
+ 		boxes[i].addEventListener("click", function(e) {
+ 		
+ 			arr.forEach(function(obj) {		
+ 				if (obj.productId == boxes[i].id) {
+
+ 					// finds prices for product, then creates HTML for those prices and stores them in variable
+ 					let priceHTML = createPriceHTML(findPrice(obj));
+
+ 					document.getElementById("detail-price-container").innerHTML = priceHTML;
+  					document.getElementById("product-detail-title").innerText = obj.productName;				    
+ 					document.getElementById("product-description").innerText = obj.desc;
+ 					document.getElementById("product-detail-main-photo").src = obj.productImgSrc;
+ 					
+ 					dataId.value = obj.productId;
+ 					addToCartButton.setAttributeNode(dataId);
+ 				}
+ 			})
+
+ 		// clears product gallery elements, changes page to "product detail" view
+ 			galleryMode.style = "display: none;";
+ 			productDetailMode.style = "display: block;";
+ 		});
     };
 }
 
@@ -158,23 +159,22 @@ class CartItem {
 
 // CODE TO EXECUTE
 
-// gets JSON object from another site, stores as Javascript object in variable "data"
+// gets JSON object from separate site, stores as Javascript object in variable "data"
 fetch('https://jeremyg2112.github.io/eCommerce-storefront-data/products.json')
   .then(function(response) {
     return response.json();
   })
   .then(function(myJson) {
     const data = Object.values(myJson);
-   //  for (let i = 0; i < data.length; i++) {
-   //  	boxes[i].innerHTML=`<img class="product-img" src="${data[i].productImgSrc}">
-			// <span class="item-title">
-			// 	<p>${data[i].productName}</p>
-			// </span>`
-   //  	};
+
    createHTML(data);
+
    // will make "data" variable accessible in global scope
    this.data = data;
   });
+
+
+// EVENT LISTENERS 
 
 // changes page back to gallery view when user clicks "return to gallery"
 returnToGallery.addEventListener("click", function(){
@@ -187,17 +187,17 @@ returnToGallery.addEventListener("click", function(){
 
 addToCartButton.addEventListener("click", function(e) {
 
-	let dataIdHolder = dataId.value;
+	let dataIdVal = dataId.value;
 	
-	if (!document.getElementById(`${dataIdHolder}_cart`)) {
+	if (!document.getElementById(`${dataIdVal}_cart`)) {
 		// creates new cart item if one does not already exist for selected product
 
 	data.forEach(function(obj) {		
 
- 				if (obj.productId == dataIdHolder) {
+ 		if (obj.productId == dataIdVal) {
  		
  					let newDiv = document.createElement("div");
- 					newDiv.id = `${dataIdHolder}_cart`;
+ 					newDiv.id = `${dataIdVal}_cart`;
  					newDiv.className = "cart-item";
  					let price = findPrice(obj).cartPrice;
  					let priceHTML = createPriceHTML(findPrice(obj));						
@@ -212,25 +212,26 @@ addToCartButton.addEventListener("click", function(e) {
 						</div>
 						<div class="cart-quantity-btn-container">
 							<button>
-								<div class="quantity-btn" id="${dataIdHolder}_subtract">-</div>
-								<span id="${dataIdHolder}_counter">1</span>
-								<div class="quantity-btn" id="${dataIdHolder}_add">+</div>
+								<div class="quantity-btn" id="${dataIdVal}_subtract">-</div>
+								<span id="${dataIdVal}_counter">1</span>
+								<div class="quantity-btn" id="${dataIdVal}_add">+</div>
 							</button>
 						</div>`;
+
 					emptyCart.style = "display: none;";
 					cart.style = "display: block;";
 					cart.appendChild(newDiv);
 
-					let newCartItem = new CartItem(dataIdHolder, price, 1);
+					let newCartItem = new CartItem(dataIdVal, price, 1);
 					myCart.push(newCartItem);
 					
 					// gives functionality to + and - buttons for cart item
-					document.getElementById(`${dataIdHolder}_add`).addEventListener("click", function() {
-						increaseQuantity(dataIdHolder);
+					document.getElementById(`${dataIdVal}_add`).addEventListener("click", function() {
+						increaseQuantity(dataIdVal);
 						calculateTotal();
 					}); 
-					document.getElementById(`${dataIdHolder}_subtract`).addEventListener("click", function() {
-						decreaseQuantity(dataIdHolder);
+					document.getElementById(`${dataIdVal}_subtract`).addEventListener("click", function() {
+						decreaseQuantity(dataIdVal);
 						calculateTotal();
 					}); 
 					calculateTotal();
@@ -238,7 +239,7 @@ addToCartButton.addEventListener("click", function(e) {
  			})
 	} else {
 		// increases quantity if product already exists in cart, same as if user had clicked "add" button 
-		increaseQuantity(dataIdHolder);
+		increaseQuantity(dataIdVal);
 		calculateTotal();
 	}
 })
