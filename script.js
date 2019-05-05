@@ -1,16 +1,15 @@
 
 // DOM SELECTORS
 const boxes = document.getElementsByClassName("product-box");
-const galleryElemOne = document.getElementById("sale");
-const galleryElemTwo = document.getElementById("products-container");
-const productDetailOne = document.getElementById("product-detail-view");
-const productDetailTwo = document.getElementById("product-detail-desc");
+const galleryMode = document.getElementById("gallery-mode")
+const productDetailMode = document.getElementById("product-detail-mode");
 const emptyCart = document.getElementById("my-cart-empty");
-const returnToGallery = document.getElementById("fake-link");
+const returnToGallery = document.getElementById("return");
 const cart = document.getElementById("cart-contents");
 const addToCartButton = document.getElementById("add-cart-btn");
 const cartTotal = document.getElementById("cart-total");
-	// creates custom HTML attribute to be used for toggling product view mode
+
+// creates custom HTML attribute to be used for toggling product view mode
 const dataId = document.createAttribute("dataId");
 
 // stores contents of cart as array of objects
@@ -34,7 +33,7 @@ function createHTML(arr) {
  				if (obj.productId == boxes[i].id) {
  					let priceHTML = createPriceHTML(findPrice(obj));
   					document.getElementById("product-detail-title").innerText = obj.productName;
- 				    document.getElementById("price-container").innerHTML = priceHTML;
+ 				    document.getElementById("detail-price-container").innerHTML = priceHTML;
  					document.getElementById("product-description").innerText = obj.desc;
  					document.getElementById("product-detail-main-photo").src = obj.productImgSrc;
  					
@@ -42,11 +41,10 @@ function createHTML(arr) {
  					addToCartButton.setAttributeNode(dataId);
  				}
  			})
+
  		// clears product gallery elements, changes page to "product detail" view
- 			galleryElemOne.style = "display: none;";
- 			galleryElemTwo.style = "display: none;";
- 			productDetailOne.style = "display: grid;";
- 			productDetailTwo.style = "display: block;";
+ 			galleryMode.style = "display: none;";
+ 			productDetailMode.style = "display: block;";
  		})
 
 
@@ -69,6 +67,7 @@ function findPrice(obj) {
  if (obj.sale) { 						
  						let origPrice = obj.price;
  						let cartPrice = origPrice * (1-(obj.sale/100));
+ 						cartPrice = Number(cartPrice.toFixed(2));
  						let prices = {cartPrice: cartPrice, origPrice: origPrice};						
  						return prices;
  					} else {
@@ -173,15 +172,15 @@ fetch('https://jeremyg2112.github.io/eCommerce-storefront-data/products.json')
 			// </span>`
    //  	};
    createHTML(data);
+   // will make "data" variable accessible in global scope
    this.data = data;
   });
 
 // changes page back to gallery view when user clicks "return to gallery"
 returnToGallery.addEventListener("click", function(){
-	productDetailOne.style = "display: none;";
- 	productDetailTwo.style = "display: none;";
-	galleryElemOne.style = "display: flex;";
- 	galleryElemTwo.style = "display: grid;";
+
+ 	productDetailMode.style = "display: none;";
+ 	galleryMode.style = "display: block;";
  	
 })
 
@@ -194,6 +193,7 @@ addToCartButton.addEventListener("click", function(e) {
 		// creates new cart item if one does not already exist for selected product
 
 	data.forEach(function(obj) {		
+
  				if (obj.productId == dataIdHolder) {
  		
  					let newDiv = document.createElement("div");
@@ -210,7 +210,7 @@ addToCartButton.addEventListener("click", function(e) {
 							<p>${obj.productName}</p>
 							<div>${priceHTML}</div>
 						</div>
-						<div class="cart-quantity">
+						<div class="cart-quantity-btn-container">
 							<button>
 								<div class="quantity-btn" id="${dataIdHolder}_subtract">-</div>
 								<span id="${dataIdHolder}_counter">1</span>
@@ -237,7 +237,7 @@ addToCartButton.addEventListener("click", function(e) {
  				}
  			})
 	} else {
-		// increases quantity if product already exists in cart  
+		// increases quantity if product already exists in cart, same as if user had clicked "add" button 
 		increaseQuantity(dataIdHolder);
 		calculateTotal();
 	}

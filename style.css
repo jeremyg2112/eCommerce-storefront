@@ -8,6 +8,7 @@ body {
 	min-width: 650px;
 	height: 100%;
 	display: grid;
+	/* Applies CSS grid to two main columns of page */
 	grid-template-columns: 7fr 3fr;
 	border-radius: 0;
 	background: white;
@@ -39,10 +40,17 @@ button, span {
 	border: none;
 }
 
+button {
+	height: 40px;
+	color: white;
+	font-weight: bold;
+	background: blue;
+}
+
 div {
 	padding: 15px;
-	box-sizing: border-box;
 	margin: 20px;
+	box-sizing: border-box;
 }
 
 button:focus, button:active {
@@ -55,6 +63,11 @@ button:hover {
 	cursor: pointer;
 }
 
+/* DIVs only used for toggling groups of elements with script */
+#gallery-mode, #product-detail-mode {
+	padding: 0;
+	margin: 0;
+}
 
 #column1, #column2 {
 	margin: 0;
@@ -68,70 +81,14 @@ button:hover {
 	padding-right: 20px;
 }
 
-#column2 {
-	position: relative;
-	max-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-}
 
-#my-cart-top {
-	/*height: 10%;*/
-	flex-basis: 10%;
-	margin: 0;
-	padding: 0;
-	text-align: center;
-}
-
-#my-cart-top h2 {
-	padding: 0;
-	margin: 0;
-}
-
-#my-cart-empty {
-	display: flex;
-
-	flex-basis: 70%;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin: 0;
-	text-align: center;
-
-}
-
-#cart-contents {
-	flex-basis: 70%;
-	padding: 0;
-	margin: 0;
-	margin-bottom: 0;
-	overflow-y: auto;
-	display: none;
-}
-
-#check-out {
-	background: white;
-	margin-bottom: 45px;
-	padding: 0;
-	width: 90%;
-	flex-basis: 20%;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	text-align: center;
-	border-radius: 0;
-	border-top: solid 1px gray;
-}
-
-
-#menu-box {
+#hamburger-menu-container {
 	flex: 30%;
 	padding: 1px 0 0 2px;
 	margin: 0;
 }
 
-#menu-box:hover {
+#hamburger-menu-container:hover {
 	cursor: pointer;
 }
 
@@ -156,15 +113,12 @@ button:hover {
 #searchbox::-webkit-input-placeholder {
 	color: white;
 }
-
 #searchbox::-moz-placeholder {
 	color: white;
 }
-
 #searchbox:-ms-input-placeholder {
 	color: white;
 }
-
 #searchbox:focus {
 	outline: none;
 }
@@ -193,24 +147,21 @@ button:hover {
 	margin-bottom: 15px;
 }
 
-#button1 {
+#sale-btn {
 	width: 25%;
-	height: 40px;
-	color: white;
-	font-weight: bold;
-	background: blue;
 }
 
 #products-container {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: 1fr;
+	/*grid-template-rows: 1fr 1fr;*/
 	grid-row-gap: 5px;
 	padding: 0;
 	margin-left: 10px;
 	margin-right: 10px;
 }
 
+/* DIV element for each product preview */
 .product-box {
 	background: white;
 	position: relative;
@@ -247,6 +198,7 @@ button:hover {
 	z-index: 3;
 }
 
+/* icon showing which items currently on sale */
 .discount {
 	position: absolute;
 	margin: 0;
@@ -259,8 +211,50 @@ button:hover {
 	z-index: 3;
 }
 
+#column2 {
+	position: relative;
+	max-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+#my-cart-top {
+	/*height: 10%;*/
+	flex-basis: 10%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#my-cart-top h2 {
+	padding: 0;
+	margin: 0;
+}
+
+
+#my-cart-empty {
+	display: flex;
+	flex-basis: 70%;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	text-align: center;
+}
+
 #sad-cart-img {
 	max-width: 100%;
+}
+
+/* DIV containing items added to cart */
+#cart-contents {
+	flex-basis: 70%;
+	padding: 0;
+	margin: 0;
+	margin-bottom: 0;
+	overflow-y: auto;
+	display: none;
 }
 
 .cart-item {
@@ -270,6 +264,20 @@ button:hover {
 	grid-template-columns: 1fr 2fr;
 }
 
+#check-out {
+	background: white;
+	margin-bottom: 45px;
+	padding: 0;
+	width: 90%;
+	flex-basis: 20%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	text-align: center;
+	border-radius: 0;
+	border-top: solid 1px gray;
+}
+
 #total {
 	display: flex;
 	justify-content: space-around;
@@ -277,36 +285,25 @@ button:hover {
 	padding: 0;
 }
 
-#button2 {
+#check-out-btn {
 	width: 50%;
-	height: 40px;
 	margin: auto;
 	margin-bottom: 0;
-	color: white;
-	font-weight: bold;
-	background: blue;
 }
 
-/* The following selectors apply only for "product detail mode" 
-   (which activates after the user clicks a product)*/
-
-/* DISPLAY FOLLOWING DIV FOR PRODUCT DETAIL VIEW 
-		HIDDEN BY DEFAULT */
-#product-detail-view {
+#product-detail-gallery {
 	width: 100%;
 	height: 60vh;
 	margin: 0;
 	padding: 0;
 	display: grid;
 	grid-template-columns: 2fr 1fr;
-	display: none;
+	/*display: none;*/
 }
 
-/* DISPLAY FOLLOWING DIV FOR PRODUCT DETAIL VIEW 
-		HIDDEN BY DEFAULT*/
 #product-detail-desc {
 	margin-top: 0;
-	display: none;
+	/*display: none;*/
 }
 
 #product-detail-main-box {
@@ -347,12 +344,12 @@ button:hover {
 	font-size: 1.2em;
 }
 
-#fake-link {
+#return {
 	text-decoration: underline;
 	color: blue;
 }
 
-#fake-link:hover {
+#return:hover {
 	cursor: pointer;
 }
 
@@ -360,10 +357,6 @@ button:hover {
 	float: right;
 	margin: 25px;
 	width: 20%;
-	height: 40px;
-	color: white;
-	font-weight: bold;
-	background: blue;
 }
 
 .cart-item {
@@ -377,12 +370,6 @@ button:hover {
 	padding: 0;
 }
 
-/*.cart-item-info p {
-	overflow: hidden;
-	text-overflow: ellipsis;
-}*/
-
-
 .cart-thumb {
 	float: left;
 }
@@ -391,13 +378,18 @@ button:hover {
   padding-bottom: 10%;
 }
 
-.cart-quantity {
+.cart-quantity-btn-container {
 	position: absolute;
 	bottom: 0%;
 	right: 5%;
 }
 
-.cart-quantity button {
+.cart-quantity-btn-container span {
+	color: black;
+	font-weight: normal;
+}
+
+.cart-quantity-btn-container button {
 	background: white;
 	padding: 0;
 	line-height: 1.7;
@@ -408,7 +400,7 @@ button:hover {
 	align-items: center;
 }
 
-.cart-quantity, .cart-quantity button:hover {
+.cart-quantity-btn-container, .cart-quantity-btn-container button:hover {
 	transform: none;
 }
 
@@ -420,19 +412,58 @@ button:hover {
 	width: 30%;
 	margin: 0;
 	padding: 0;
+	height: auto;
+	color: black;
+	font-weight: bold;
 	background: gray;
 }
 
-#price-container {
+#detail-price-container {
 	margin: 0;
 	padding: 0;
 }
 
-#price-container p {
+#detail-price-container p {
 	display: inline;
 }
 
 .strike {
 	color: red;
 	text-decoration: line-through;
+}
+
+
+@media (max-width: 768px) {
+	#sale {
+		min-height: auto;
+	}
+	#column1 {
+		padding: 10px 10px;
+	}
+	#product-detail-view {
+		grid-template-columns: 1fr;
+		min-height: auto;
+		height: 25vh;
+	}
+	#product-detail-main-box {
+		padding: 0;
+	}
+	#products-container {
+		grid-template-columns: 1fr 1fr;
+	}
+	#product-detail-add-photos-container {
+		display: none;
+	}
+	#product-detail-desc {
+		margin: 0;
+	}
+	.cart-thumb-img {
+		width: 80px;
+		max-height: auto;
+		max-width: auto;
+	}
+	#add-cart-btn {
+		margin: 12px;
+		width: 30%;
+	}
 }
